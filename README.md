@@ -162,6 +162,20 @@ npm run lint
 
 ```
 
+## Como Rodar os testes
+
+
+5. ** Instalar para e2e **
+```bash
+npx playwright install
+
+```
+```bash
+npm run test:e2e
+
+```
+
+
 ## Estratégias de Carregamento de Dados
 
 ### Página Inicial `/users` com Busca `/search/users`
