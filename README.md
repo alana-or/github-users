@@ -164,24 +164,18 @@ npm run lint
 
 ## Estratégias de Carregamento de Dados
 
-### Página Inicial `/users`
+### Página Inicial `/users` com Busca `/search/users`
 
-- **Descrição**: Exibe uma lista de todos os usuários.
+- **Descrição**: Exibe uma lista de todos os usuários e permite ao usuário buscar por usuários Github.
 - **Estratégia de Dados**: 
-  - Utiliza **`getStaticProps`** para gerar a página estaticamente. Ideal para páginas sem interações e que não necessitam de atualizações frequentes.
-  - Considera-se a implementação de cache, como Redis, para melhorar a performance e reduzir a carga no servidor.
+  - Utiliza renderização no client para obter dados dinamicamente com base na interação do usuário com a busca.
+  - Utiliza **`getServerSideProps`** para obter dados no primeiro carregamento da aplicação.
 
 ### Página de Detalhes do Usuário `/users/username` e Listagem de Repositórios `/users/username/repos`
 
 - **Descrição**: Mostra detalhes específicos de um usuário e seus repositórias.
 - **Estratégia de Dados**: 
   - Utiliza **`getStaticProps`** para gerar a página estaticamente. Dados não mudam frequentemente, o que justifica o uso de renderização estática.
-
-### Página de Busca `/search/users`
-
-- **Descrição**: Permite ao usuário buscar por usuários Github.
-- **Estratégia de Dados**: 
-  - Utiliza **`getServerSideProps`** para obter dados dinamicamente com base na interação do usuário, garantindo que os resultados da busca estejam sempre atualizados.
 
 ## Funcionalidades Extras
 
