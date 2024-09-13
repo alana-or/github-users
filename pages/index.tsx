@@ -56,6 +56,7 @@ const Home = ({ initialUsers }: HomeProps) => {
             className={`flex items-center p-4 border-b border-gray-200 ${
               visitedUsers.includes(user.login) ? 'bg-gray-100' : ''
             }`}
+            onClick={() => handleClick(user.login)}
           >
             <Link
               href={`/users/${user.login}`}
