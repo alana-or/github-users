@@ -1,8 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { enableMapSet } from 'immer';
 import historyReducer from './historySlice';
-
-enableMapSet();
 
 const store = configureStore({
   reducer: {
