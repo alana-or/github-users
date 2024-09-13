@@ -6,25 +6,39 @@ import { addVisitedUser } from '@/store/historySlice';
 import { AppDispatch, RootState } from '@/store/store';
 import axiosInstance from '../lib/axiosInstance';
 import SearchInput from '@/components/search-input';
-
-interface User {
-  login: string;
-  name: string; 
-  avatar_url: string; 
-}
+import { User } from '@/types/UserDetailProps';
 
 interface HomeProps {
-  users: User[];
+  initialUsers: User[];
 }
 
-const Home = ({ users }: HomeProps) => {
+const Home = ({ initialUsers }: HomeProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const visitedUsers = useSelector((state: RootState) => state.history.visitedUsers);
 
-  const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>(initialUsers);
 
-  const handleSearch = (usersData: User[]) => {
-    setFilteredUsers(usersData);
+  const handleSearch = async (query: string) => {
+    if (query) {
+      try {
+        const searchResult = await axiosInstance.get(`/search/users?q=${query}`);
+        const usersData = searchResult.data.items;
+
+        const userDetails = await Promise.all(
+          usersData.map(async (user: { login: string }) => {
+            const userRes = await axiosInstance.get(`/users/${user.login}`);
+            return userRes.data;
+          })
+        );
+
+        setFilteredUsers(userDetails);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        setFilteredUsers([]);
+      }
+    } else {
+      setFilteredUsers(initialUsers);
+    }
   };
 
   const handleClick = (login: string) => {
@@ -39,18 +53,20 @@ const Home = ({ users }: HomeProps) => {
         {filteredUsers.map((user) => (
           <li
             key={user.login}
-            className={`flex w-full items-center justify-between p-4 border-b border-gray-200 ${
+            className={`flex items-center p-4 border-b border-gray-200 ${
               visitedUsers.includes(user.login) ? 'bg-gray-100' : ''
             }`}
-            onClick={() => handleClick(user.login)}
           >
-            <Link href={`/users/${user.login}`} className="text-blue-600 hover:text-blue-800 flex items-center">
+            <Link
+              href={`/users/${user.login}`}
+              className="flex w-full items-center text-blue-600 hover:text-blue-800"
+            >
               <img
                 src={user.avatar_url}
                 alt={user.login}
                 className="w-12 h-12 rounded-full mr-4"
               />
-              <div className="flex flex-col">
+              <div className="flex flex-col flex-grow">
                 <span className="font-medium">{user.name || user.login}</span>
                 <span className="text-gray-500">@{user.login}</span>
               </div>
@@ -63,12 +79,12 @@ const Home = ({ users }: HomeProps) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const result = await axiosInstance.get('/users');
     
     const users = await Promise.all(
-      result.data.map(async (user: User) => {
+      result.data.map(async (user: { login: string }) => {
         const userResult = await axiosInstance.get(`/users/${user.login}`);
         return userResult.data;
       })
@@ -76,14 +92,13 @@ export async function getStaticProps() {
     
     return {
       props: {
-        users, 
+        initialUsers: users,
       },
-      revalidate: 3600,
     };
 
   } catch (error) {
     console.error('Error loading:', error);
-    return { props: { users: [] } }; 
+    return { props: { initialUsers: [] } }; 
   }
 }
 

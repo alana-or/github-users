@@ -1,5 +1,10 @@
-/* eslint-disable */
-interface User {
+export interface User {
+  login: string;
+  name: string; 
+  avatar_url: string; 
+}
+
+export interface UserDetail {
   login: string;
   name: string;
   bio: string;
@@ -9,13 +14,13 @@ interface User {
   email: string;
 }
 
-interface Repo {
+export interface Repo {
   id: number;
   name: string;
   html_url: string;
 }
 
-interface UserDetailProps {
-  user: User;
+export interface UserDetailProps {
+  user: UserDetail;
   repos: Repo[];
 }
