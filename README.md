@@ -2,6 +2,44 @@
 
 Este projeto é uma aplicação Next.js que exibe uma lista de usuários e detalhes sobre eles. A seguir, estão detalhadas as estratégias de carregamento de dados e funcionalidades adicionais implementadas.
 
+# Guia para Gerar um Token de Acesso Pessoal do GitHub
+
+Este guia explica como criar um token de acesso pessoal do GitHub neste aplicativo.
+
+## Passos para Gerar um Token do GitHub
+
+1. **Acesse sua Conta GitHub**
+   - Vá para [GitHub](https://github.com) e faça login na sua conta.
+
+2. **Acesse as Configurações**
+   - Clique na sua foto de perfil no canto superior direito da página e selecione **"Settings"** (Configurações).
+
+3. **Navegue para Configurações de Desenvolvedor**
+   - No menu lateral esquerdo, role para baixo e clique em **"Developer settings"** (Configurações de desenvolvedor).
+
+4. **Crie um Novo Token**
+   - Clique em **"Tokens (classic)"**.
+   - Em seguida, clique em **"Generate new token"** (Gerar novo token).
+
+5. **Configure o Token**
+   - **Note**: Dê um nome ao seu token, como **"Github-users Token"** para ajudar a identificar seu uso.
+   - Defina a **data de expiração** do token conforme sua necessidade (opcional).
+   - **Scopes**: Selecione as permissões **"repo"** e **"user"**. 
+   - Clique em **"Generate token"** (Gerar token).
+
+6. **Copie o Token**
+   - O GitHub exibirá o token gerado. **Copie-o imediatamente**, pois você não poderá vê-lo novamente após sair dessa página.
+   - **Nota:** Armazene o token em um local seguro. Não compartilhe seu token publicamente.
+
+7. **Configure o Token no Seu Aplicativo**
+   - Atualize a variável TOKEN no arquivo .env
+
+## Dicas de Segurança
+
+- **Não compartilhe seu token**: O token de acesso é como uma senha e deve ser tratado com o mesmo nível de segurança.
+- **Revogue tokens não usados**: Se você gerar um novo token ou não precisar mais de um token antigo, lembre-se de revogá-lo nas configurações do GitHub.
+- **Armazene tokens com segurança**: Use mecanismos seguros para armazenar tokens, como variáveis de ambiente ou serviços de gerenciamento de segredos.
+
 ## Tecnologias Utilizadas
 
 ### Next.js

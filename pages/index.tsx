@@ -1,9 +1,11 @@
-import { GetServerSideProps } from 'next';
 import { useState } from 'react';
-import SearchInput from '@/components/SearchInput';
-import axiosInstance from '@/lib/axiosInstance';
 import Link from 'next/link';
-import { FaChevronRight } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaChevronRight } from 'react-icons/fa'; 
+import { addVisitedUser } from '@/store/historySlice';
+import { AppDispatch, RootState } from '@/store/store';
+import axiosInstance from '../lib/axiosInstance';
+import SearchInput from '@/components/search-input';
 
 interface User {
   login: string;
@@ -11,24 +13,37 @@ interface User {
   avatar_url: string; 
 }
 
-interface OtherPageProps {
-  initialUsers: User[];
+interface HomeProps {
+  users: User[];
 }
 
-const OtherPage = ({ initialUsers }: OtherPageProps) => {
-  const [filteredUsers, setFilteredUsers] = useState<User[]>(initialUsers);
+const Home = ({ users }: HomeProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const visitedUsers = useSelector((state: RootState) => state.history.visitedUsers);
 
-  const handleSearch = async (usersData: User[]) => {
+  const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
+
+  const handleSearch = (usersData: User[]) => {
     setFilteredUsers(usersData);
   };
 
+  const handleClick = (login: string) => {
+    dispatch(addVisitedUser(login));
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div className="flex flex-col items-center min-h-screen p-4 bg-gray-100">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">GitHub Usuários</h1>
       <SearchInput onSearch={handleSearch} />
       <ul className="w-full max-w-lg bg-white shadow-md rounded-lg overflow-hidden">
         {filteredUsers.map((user) => (
-          <li key={user.login} className="flex w-full items-center justify-between p-4 border-b border-gray-200">
+          <li
+            key={user.login}
+            className={`flex w-full items-center justify-between p-4 border-b border-gray-200 ${
+              visitedUsers.includes(user.login) ? 'bg-gray-100' : ''
+            }`}
+            onClick={() => handleClick(user.login)}
+          >
             <Link href={`/users/${user.login}`} className="text-blue-600 hover:text-blue-800 flex items-center">
               <img
                 src={user.avatar_url}
@@ -48,26 +63,28 @@ const OtherPage = ({ initialUsers }: OtherPageProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<OtherPageProps> = async () => {
+export async function getStaticProps() {
   try {
     const result = await axiosInstance.get('/users');
+    
     const users = await Promise.all(
       result.data.map(async (user: User) => {
         const userResult = await axiosInstance.get(`/users/${user.login}`);
         return userResult.data;
       })
     );
-
+    
     return {
       props: {
-        initialUsers: users,
+        users, 
       },
+      revalidate: 3600,
     };
 
   } catch (error) {
     console.error('Error loading:', error);
-    return { props: { initialUsers: [] } };
+    return { props: { users: [] } }; 
   }
-};
+}
 
-export default OtherPage;
+export default Home;

@@ -1,5 +1,5 @@
-import React, { useState, ChangeEvent } from 'react';
 import axiosInstance from '@/lib/axiosInstance';
+import React, { useState, ChangeEvent } from 'react';
 
 interface SearchInputProps {
   onSearch: (users: User[]) => void;
