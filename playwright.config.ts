@@ -3,7 +3,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   use: {
     baseURL: 'http://localhost:3000', 
-    headless: false,
+    headless: true,
   },
-  testDir: './tests-e2e'
+  testDir: './__tests-e2e__'
 });

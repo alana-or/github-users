@@ -47,6 +47,16 @@ Este guia explica como criar um token de acesso pessoal do GitHub neste aplicati
 - **Descrição**: Framework React para aplicações de renderização do lado do servidor e geração de sites estáticos. Utilizado para criar a estrutura do projeto e gerenciar a renderização de páginas.
 - **Objetivo**: Fornece uma solução robusta para o roteamento e a renderização de páginas, tanto estaticamente (`getStaticProps`) quanto dinamicamente (`getServerSideProps`).
 
+### Jest
+
+- **Descrição**: Jest é um framework de testes para JavaScript. Jest suporta testes unitários, de integração e de snapshots. Ele fornece uma API rica para criar e executar testes, além de recursos como cobertura de código e execução paralela de testes para melhorar o desempenho.
+- **Objetivo**: Facilitar a escrita e execução de testes em código JavaScript/TypeScript. 
+
+### Playwright
+
+- **Descrição**: Playwright é uma ferramenta para automação de navegador desenvolvida pela Microsoft. É usada para testes end-to-end (E2E) e suporta múltiplos navegadores, incluindo Chromium, Firefox e WebKit.
+- **Objetivo**: O Playwright é ideal para testes que envolvem a interação com a interface do usuário e a validação do comportamento da aplicação de ponta a ponta.
+
 ### Tailwind CSS
 
 - **Descrição**: Framework de CSS utilitário que permite criar interfaces modernas e responsivas rapidamente.
@@ -164,14 +174,23 @@ npm run lint
 
 ## Como Rodar os testes
 
+1. ** Testes e2e **
 
-5. ** Instalar para e2e **
+A instalação do Playwright inclui a configuração de ferramentas essenciais e a instalação dos navegadores necessários para os testes.
+
 ```bash
 npx playwright install
 
 ```
 ```bash
 npm run test:e2e
+
+```
+
+2. ** Testes de integração e unitários **
+
+```bash
+npm run test
 
 ```
 
@@ -209,7 +228,7 @@ Erro ao buscar detalhes do usuário na api.
 - **Descrição**: Exibe uma lista de todos os usuários e permite ao usuário buscar por usuários Github.
 - **Estratégia de Dados**: 
   - Utiliza renderização no client para obter dados dinamicamente com base na interação do usuário com a busca.
-  - Utiliza **`getServerSideProps`** para obter dados no primeiro carregamento da aplicação.
+  - Utiliza **`getStaticProps`** para gerar a página estaticamente. Dados não mudam frequentemente, o que justifica o uso de renderização estática.
 
 ### Página de Detalhes do Usuário `/users/username` e Listagem de Repositórios `/users/username/repos`
 

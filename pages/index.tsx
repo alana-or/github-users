@@ -5,7 +5,6 @@ import { AppDispatch, RootState } from '@/store/store';
 import axiosInstance from '../lib/axiosInstance';
 import SearchInput from '@/components/SearchInput';
 import { User } from '@/types/UserDetailProps';
-import Heading from '@/components/Heading';
 import UserList from '@/components/UserList';
 import ErrorMessage from '@/components/ErrorMessage';
 
@@ -31,7 +30,6 @@ const Home = ({ initialUsers }: HomeProps) => {
       try {
         const searchResult = await axiosInstance.get(`/search/users?q=${query}`);
         const usersData = searchResult.data.items;
-
         const userDetails = await Promise.all(
           usersData.map(async (user: { login: string }) => {
             const userRes = await axiosInstance.get(`/users/${user.login}`);
@@ -42,9 +40,8 @@ const Home = ({ initialUsers }: HomeProps) => {
         setFilteredUsers(userDetails);  
         setError(null);
       } catch (error) {
-        console.error('Error fetching users:', error);
         setFilteredUsers([]);
-        setError('Falha ao carregar os usuários. Por favor, tente novamente mais tarde.');
+        setError('Falha ao pesquisar usuários. Por favor, tente novamente mais tarde.');
       }
     } else {
       setFilteredUsers(initialUsers);
@@ -57,9 +54,7 @@ const Home = ({ initialUsers }: HomeProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-4 bg-gray-100">
-      <Heading text="GitHub Usuários" />
-      
+    <>
       <SearchInput onSearch={handleSearch} />
 
       {error && <ErrorMessage message={error} />}
@@ -69,11 +64,11 @@ const Home = ({ initialUsers }: HomeProps) => {
           visitedUsers={visitedUsers}
           handleClick={handleClick}
         />
-    </div>
+    </>
   );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   try {
     const result = await axiosInstance.get('/users');
     
@@ -88,11 +83,14 @@ export async function getServerSideProps() {
       props: {
         initialUsers: users,
       },
+      revalidate: 3600, 
     };
 
   } catch (error) {
-    console.error('Error loading:', error);
-    return { props: { initialUsers: [] } }; 
+    return { 
+      props: { initialUsers: [] },
+      revalidate: 3600, 
+    }; 
   }
 }
 

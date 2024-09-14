@@ -4,12 +4,10 @@ import { Provider } from 'react-redux';
 import store from '@/store/store'; 
 import { addVisitedUser } from '@/store/historySlice';
 import UserDetail from '@/pages/users/[username]';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
-jest.mock('../lib/axiosInstance', () => ({
-  get: jest.fn(),
-}));
-
-const mockAxios = require('../lib/axiosInstance');
+const mockAxios = new MockAdapter(axios);
 
 const mockUser = {
   login: 'user',
@@ -28,23 +26,41 @@ const mockRepos = [
 
 describe('UserDetail Page', () => {
   beforeEach(() => {
-    mockAxios.get.mockReset();
+    mockAxios.reset(); 
   });
 
-  it('renders "Voltar" link and navigates to the home page', () => {
-    mockAxios.get.mockImplementation((url: string | string[]) => {
-      if (url.includes('/users/user')) {
-        return Promise.resolve({ data: mockUser });
-      }
-      if (url.includes('/users/user/repos')) {
-        return Promise.resolve({ data: mockRepos });
-      }
-      return Promise.resolve({ data: [] });
-    });
+  it('shows an error message if fetching user data fails', async () => {
+    mockAxios.onGet('/users/user').reply(500);
 
     render(
       <Provider store={store}>
-        <UserDetail user={mockUser} repos={[]} />
+        <UserDetail user={null} repos={[]} error="Erro ao carregar os dados. Por favor, tente novamente." />
+      </Provider>
+    );
+
+    expect(screen.getByText('Erro ao carregar os dados. Por favor, tente novamente.')).toBeInTheDocument();
+  });
+
+  it('shows an error message if fetching user repos fails', async () => {
+    mockAxios.onGet('/users/user').reply(200, mockUser);
+    mockAxios.onGet('/users/user/repos').reply(500);
+
+    render(
+      <Provider store={store}>
+        <UserDetail user={mockUser} repos={[]} error="Erro ao carregar os dados. Por favor, tente novamente." />
+      </Provider>
+    );
+
+    expect(screen.getByText('Erro ao carregar os dados. Por favor, tente novamente.')).toBeInTheDocument();
+  });
+
+  it('renders "Voltar" link and navigates to the home page', async () => {
+    mockAxios.onGet('/users/user').reply(200, mockUser);
+    mockAxios.onGet('/users/user/repos').reply(200, mockRepos);
+
+    render(
+      <Provider store={store}>
+        <UserDetail user={mockUser} repos={mockRepos} />
       </Provider>
     );
 
@@ -54,15 +70,8 @@ describe('UserDetail Page', () => {
   });
 
   it('renders user details correctly', async () => {
-    mockAxios.get.mockImplementation((url: string | string[]) => {
-      if (url.includes('/users/user')) {
-        return Promise.resolve({ data: mockUser });
-      }
-      if (url.includes('/users/user/repos')) {
-        return Promise.resolve({ data: mockRepos });
-      }
-      return Promise.resolve({ data: [] });
-    });
+    mockAxios.onGet('/users/user').reply(200, mockUser);
+    mockAxios.onGet('/users/user/repos').reply(200, mockRepos);
 
     render(
       <Provider store={store}>
@@ -70,13 +79,12 @@ describe('UserDetail Page', () => {
       </Provider>
     );
 
-    expect(screen.getByText('GitHub Usuários')).toBeInTheDocument();
     expect(screen.getByText('User')).toBeInTheDocument();
     expect(screen.getByText('@user')).toBeInTheDocument();
     expect(screen.getByText('Bio of User')).toBeInTheDocument();
     expect(screen.getByText('Empresa: Company Inc.')).toBeInTheDocument();
     expect(screen.getByText('Localização: Location City')).toBeInTheDocument();
-    
+
     const emailLink = screen.getByRole('link', { name: 'user@example.com' });
     expect(emailLink).toBeInTheDocument();
     expect(emailLink).toHaveAttribute('href', 'mailto:user@example.com');
@@ -85,11 +93,12 @@ describe('UserDetail Page', () => {
     expect(screen.getByText('Repo2')).toBeInTheDocument();
   });
 
-  //se usuário acessar a página somente pela url, não ocorreu o dspatch do click na página index
-  //pode parecer redundante, mas é pra garantir essa ação fora do clique
   it('dispatches addVisitedUser action on component mount', async () => {
     const mockDispatch = jest.fn();
     jest.spyOn(store, 'dispatch').mockImplementation(mockDispatch);
+
+    mockAxios.onGet('/users/user').reply(200, mockUser);
+    mockAxios.onGet('/users/user/repos').reply(200, mockRepos);
 
     render(
       <Provider store={store}>

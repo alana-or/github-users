@@ -21,6 +21,6 @@ export interface Repo {
 }
 
 export interface UserDetailProps {
-  user: UserDetail;
+  user: UserDetail | null;
   repos: Repo[];
 }
