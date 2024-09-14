@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addVisitedUser } from '@/store/historySlice';
 import { AppDispatch, RootState } from '@/store/store';
@@ -7,47 +7,31 @@ import SearchInput from '@/components/SearchInput';
 import { User } from '@/types/UserDetailProps';
 import UserList from '@/components/UserList';
 import ErrorMessage from '@/components/ErrorMessage';
+import Loader from '@/components/Loader'; 
+import debouncedSearch from './api/debouncedSearch';
 
 interface HomeProps {
   initialUsers: User[];
+  initialError: string | null;
 }
 
-const Home = ({ initialUsers }: HomeProps) => {
+const Home = ({ initialUsers, initialError }: HomeProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const visitedUsers = useSelector((state: RootState) => state.history.visitedUsers);
 
   const [filteredUsers, setFilteredUsers] = useState<User[]>(initialUsers);
-  const [error, setError] = useState<string | null>(null);
-  
+  const [error, setError] = useState<string | null>(initialError);
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (!initialUsers || initialUsers.length === 0) {
       setError('Falha ao carregar os usuários. Por favor, tente novamente mais tarde.');
     }
   }, [initialUsers]);
-
-  const handleSearch = async (query: string) => {
-    if (query) {
-      try {
-        const searchResult = await axiosInstance.get(`/search/users?q=${query}`);
-        const usersData = searchResult.data.items;
-        const userDetails = await Promise.all(
-          usersData.map(async (user: { login: string }) => {
-            const userRes = await axiosInstance.get(`/users/${user.login}`);
-            return userRes.data;
-          })
-        );
-
-        setFilteredUsers(userDetails);  
-        setError(null);
-      } catch (error) {
-        setFilteredUsers([]);
-        setError('Falha ao pesquisar usuários. Por favor, tente novamente mais tarde.');
-      }
-    } else {
-      setFilteredUsers(initialUsers);
-      setError(null);
-    }
-  };
+  
+  const handleSearch = useCallback((query: string) => {
+    debouncedSearch(query, setLoading, setFilteredUsers, setError, initialUsers);
+  }, [initialUsers]);
 
   const handleClick = (login: string) => {
     dispatch(addVisitedUser(login));
@@ -57,13 +41,19 @@ const Home = ({ initialUsers }: HomeProps) => {
     <>
       <SearchInput onSearch={handleSearch} />
 
-      {error && <ErrorMessage message={error} />}
+      {error && (
+        <div className='w-lg'>
+          <ErrorMessage message={error} />
+        </div>
+      )}
+
+      {loading && <Loader />}
 
       <UserList
-          users={filteredUsers}
-          visitedUsers={visitedUsers}
-          handleClick={handleClick}
-        />
+        users={filteredUsers}
+        visitedUsers={visitedUsers}
+        handleClick={handleClick}
+      />
     </>
   );
 };
@@ -71,25 +61,34 @@ const Home = ({ initialUsers }: HomeProps) => {
 export async function getStaticProps() {
   try {
     const result = await axiosInstance.get('/users');
-    
     const users = await Promise.all(
       result.data.map(async (user: { login: string }) => {
-        const userResult = await axiosInstance.get(`/users/${user.login}`);
-        return userResult.data;
+        try {
+          const userResult = await axiosInstance.get(`/users/${user.login}`);
+          return userResult.data;
+        } catch (err) {
+          console.error(`Erro ao buscar detalhes do usuário ${user.login}:`, err);
+          return null;
+        }
       })
     );
     
+    const validUsers = users.filter((user): user is User => user !== null);
+
     return {
       props: {
-        initialUsers: users,
+        initialUsers: validUsers,
+        initialError: null,
       },
       revalidate: 3600, 
     };
-
   } catch (error) {
     return { 
-      props: { initialUsers: [] },
-      revalidate: 3600, 
+      props: { 
+        initialUsers: [],
+        initialError: 'Falha ao carregar os usuários. Por favor, tente novamente mais tarde.',
+      },
+      revalidate: 3600,
     }; 
   }
 }
