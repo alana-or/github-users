@@ -13,7 +13,7 @@ const mockAxios = require('../lib/axiosInstance');
 
 const mockUser = {
   login: 'user',
-  avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+  avatar_url: 'https://avatars',
   name: 'User',
   bio: 'Bio of User',
   company: 'Company Inc.',
@@ -22,13 +22,35 @@ const mockUser = {
 };
 
 const mockRepos = [
-  { id: 1, name: 'Repo1', html_url: 'https://github.com/repo1' },
+  { id: 1, name: 'Repo1', html_url: 'https://github.com/user/repo1' },
   { id: 2, name: 'Repo2', html_url: 'https://github.com/user/repo2' },
 ];
 
-describe('UserDetail Component', () => {
+describe('UserDetail Page', () => {
   beforeEach(() => {
     mockAxios.get.mockReset();
+  });
+
+  it('renders "Voltar" link and navigates to the home page', () => {
+    mockAxios.get.mockImplementation((url: string | string[]) => {
+      if (url.includes('/users/user')) {
+        return Promise.resolve({ data: mockUser });
+      }
+      if (url.includes('/users/user/repos')) {
+        return Promise.resolve({ data: mockRepos });
+      }
+      return Promise.resolve({ data: [] });
+    });
+
+    render(
+      <Provider store={store}>
+        <UserDetail user={mockUser} repos={[]} />
+      </Provider>
+    );
+
+    const backLink = screen.getByText('Voltar');
+    expect(backLink).toBeInTheDocument();
+    expect(backLink).toHaveAttribute('href', '/');
   });
 
   it('renders user details correctly', async () => {
@@ -63,6 +85,8 @@ describe('UserDetail Component', () => {
     expect(screen.getByText('Repo2')).toBeInTheDocument();
   });
 
+  //se usuário acessar a página somente pela url, não ocorreu o dspatch do click na página index
+  //pode parecer redundante, mas é pra garantir essa ação fora do clique
   it('dispatches addVisitedUser action on component mount', async () => {
     const mockDispatch = jest.fn();
     jest.spyOn(store, 'dispatch').mockImplementation(mockDispatch);
@@ -78,4 +102,3 @@ describe('UserDetail Component', () => {
     });
   });
 });
-

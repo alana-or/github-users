@@ -4,7 +4,6 @@ import Home from '@/pages/index';
 import { Provider } from 'react-redux';
 import store from '@/store/store'; 
 import { addVisitedUser } from '@/store/historySlice';
-import { act } from 'react-test-renderer'; 
 
 jest.mock('../lib/axiosInstance', () => ({
   get: jest.fn(),
@@ -20,7 +19,7 @@ const initialUsers = [
   },
 ];
 
-describe('Home Component', () => {
+describe('Home Page', () => {
   beforeEach(() => {
     mockAxios.get.mockReset();
   });
@@ -78,9 +77,7 @@ describe('Home Component', () => {
       </Provider>
     );
 
-    act(() => {
-      fireEvent.click(screen.getByText('User'));
-    });
+    fireEvent.click(screen.getByText('User'));
 
     expect(mockDispatch).toHaveBeenCalledWith(addVisitedUser('user'));
   });
