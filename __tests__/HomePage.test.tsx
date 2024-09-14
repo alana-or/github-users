@@ -49,28 +49,61 @@ describe('Home Page', () => {
       expect(screen.getByText('Falha ao pesquisar usuários. Por favor, tente novamente mais tarde.')).toBeInTheDocument();
     });
   });
-
+  const mockUserResponse = [
+    { login: 'user1', name: 'User 1' },
+    { login: 'user2', name: 'User 2' },
+  ];
+  
   test('should revert to initial users when search query is cleared', async () => {
     render(
       <Provider store={store}>
         <Home initialUsers={initialUsers} />
       </Provider>
     );
-
+  
     mockAxios.onGet('/search/users?q=test').reply(200, { items: [] });
-
+  
+    expect(screen.getByText('User')).toBeInTheDocument();
+  
     const searchInput = screen.getByRole('textbox');
     fireEvent.change(searchInput, { target: { value: 'test' } });
-
+  
     await waitFor(() => {
       expect(screen.queryByText('User')).not.toBeInTheDocument();
     });
-
+  
+    mockAxios.onGet('/search/users?q=').reply(200, { items: mockUserResponse });
+  
     fireEvent.change(searchInput, { target: { value: '' } });
-
+  
     await waitFor(() => {
       expect(screen.getByText('User')).toBeInTheDocument();
     });
+  });
+
+  test('should show and hide Loader component during search', async () => {
+    render(
+      <Provider store={store}>
+        <Home initialUsers={initialUsers} />
+      </Provider>
+    );
+  
+    expect(screen.getByText('User')).toBeInTheDocument();
+  
+    mockAxios.onGet('/search/users?q=test').reply(() => {
+      return new Promise((resolve) => setTimeout(() => resolve([200, { items: [] }]), 1000));
+    });
+  
+    const searchInput = screen.getByRole('textbox');
+    fireEvent.change(searchInput, { target: { value: 'test' } });
+  
+    expect(screen.getByText('Carregando...')).toBeInTheDocument();
+  
+    await waitFor(() => {
+      expect(screen.queryByText('Carregando...')).not.toBeInTheDocument();
+    });
+  
+    expect(screen.queryByText('User')).not.toBeInTheDocument();
   });
 
   test('logs error details when search API fails', async () => {
