@@ -178,22 +178,28 @@ npm run test:e2e
 ## Telas e documentação
 ### Página inicial
 Buscando usuário na api.
+
 ![Página incial](docs/pagina-inicial.png)
 
 Lista de usuários marcando usuário que já foram visitados.
+
 ![lista de usuários](docs/visitados.png)
 
 Erro ao buscar os usuários na api quando faz a busca pelo campo.
+
 ![mensagem de erro](docs/error-search.png)
 
 Erro ao buscar os usuários na api.
+
 ![mensagem de erro](docs/error.png)
 
 ### Detalhes do usuário
 Buscando informações básicas do usuário e seus repositórios.
+
 ![Página de detalhes](docs/detalhes.png)
 
 Erro ao buscar detalhes do usuário na api.
+
 ![mensagem de erro](docs/erro-detalhes.png)
 
 ## Estratégias de Carregamento de Dados
