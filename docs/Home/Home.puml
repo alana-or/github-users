@@ -7,12 +7,18 @@ participant "GitHub API" as GitHubAPI
 
 User -> Server : Request Home Page
 Server -> GitHubAPI : GET /users
-GitHubAPI -> Server : Return List of Users
-
-Server -> GitHubAPI : GET /users/:username (for each user)
-GitHubAPI -> Server : Return User Details (for each user)
-
-Server -> Home : Return Static Props
+alt Success
+    GitHubAPI -> Server : Return List of Users
+    Server -> GitHubAPI : GET /users/:username (for each user)
+    GitHubAPI -> Server : Return User Details (for each user)
+    Server -> Home : Return Static Props
+else Error
+    GitHubAPI -> Server : Error Response
+    Server -> Home : Return Error Message
+end
 
 Home -> User : Render Home Page
+alt Error
+    Home -> User : Display "Falha ao carregar os usuários."
+end
 @enduml

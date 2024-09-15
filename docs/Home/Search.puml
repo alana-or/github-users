@@ -11,9 +11,19 @@ Home -> Home : Debounce Delay (e.g., 300ms)
 
 Home -> InternalAPI : Request Search Query (GET /api/searchUsers?query=:query)
 InternalAPI -> GitHubAPI : GET /search/users?q=:query
-GitHubAPI -> InternalAPI : Return User Data
 
-InternalAPI -> Home : Return User Data
-
-Home -> User : Display Search Results
+alt Success with Data
+    GitHubAPI -> InternalAPI : Return User Data
+    InternalAPI -> Home : Return User Data
+    
+    alt No Data
+        Home -> User : Display "Nenhum usuário encontrado."
+    else Data Available
+        Home -> User : Display Search Results
+    end
+else API Error
+    GitHubAPI -> InternalAPI : Error Response
+    InternalAPI -> Home : Return Error
+    Home -> User : Display "Falha ao pesquisar usuários."
+end
 @enduml

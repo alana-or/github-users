@@ -117,9 +117,10 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
     lighthouse http://localhost:3000/ --output html --output-path ./report-mobile.html --config-path ./lighthouse-config-mobile.json
     ```
 
-**OBS**: Não passei muito tempo nessa parte, então daria para otimizar melhor a app.
 
 ## Como Rodar o Projeto
+
+Baixe o projeto no seu computador, acesse a pasta onde se encontra o package.json e siga as instruções:
 
 1. **Instalar Dependências**
 
@@ -147,6 +148,7 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
     npm run start
     ```
 
+    Isso irá rodar a aplicação em modo de produção e você poderá acessá-la em [http://localhost:3000](http://localhost:3000).
 5. **Executar Lint**
 
     ```bash
@@ -162,7 +164,7 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
     ```bash
     npx playwright install
     ```
-
+   Para executar os testes e2e, tenha certeza de que a aplicação de dev não esteja sendo executada. A melhor performance acontece com a versão de produção.
     Execute os testes E2E:
 
     ```bash
@@ -214,7 +216,7 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
 #### Fluxo de Ações
 
 1. **Usuário Solicita Página Inicial**
-   - O usuário faz uma solicitação para a página inicial (Home).
+   - O usuário faz uma solicitação para a página inicial (Página inicial).
 
 2. **Servidor Obtém Lista de Usuários**
    - O servidor Next.js processa essa solicitação chamando a API do GitHub para obter uma lista de usuários (`GET /users`).
@@ -234,6 +236,9 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
 7. **Home Renderiza a Página Inicial**
    - O componente Home usa as props estáticas para renderizar a página inicial para o usuário.
 
+8. **Home Responde com erros**
+   - O componente `Home` recebe mensagem de erro "Falha ao carregar dados dos usuários".
+
 ### Fluxo de Pesquisa de Usuário
 
 ![Fluxo de pesquisa](docs/Home/Search.png)
@@ -243,7 +248,7 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
 1. **Usuário (User)**
    - O usuário digita uma consulta de pesquisa na interface do componente Home.
 
-2. **Componente Home (Home)**
+2. **Componente Home (Página inicial)**
    - O componente Home aciona a função `debouncedSearch` quando o usuário digita.
    - A função `debouncedSearch` introduz um atraso (debounce) para evitar chamadas excessivas enquanto o usuário ainda está digitando. Este atraso é representado no diagrama como "Debounce Delay" (por exemplo, 300ms).
 
@@ -259,8 +264,14 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
 6. **API Interna (InternalAPI)**
    - Recebe os dados da API externa e retorna esses dados para o componente Home.
 
-7. **Componente Home (Home)**
+7. **Componente Home (Página inicial)**
    - Atualiza a interface com os resultados da pesquisa.
+
+8. **Home (Página inicial) Responde com erros**
+   - O componente `Home` recebe mensagem de erro "Falha ao pesquisar usuários".
+
+9. **Home (Página inicial) Responde falha**
+   - O componente `Home` recebe mensagem de "Nenhum usuário encontrado".
 
 ### Fluxo de Dados para a Página de Detalhes do Usuário
 
@@ -288,6 +299,9 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
 
 7. **UserDetail Renderiza a Página**
    - O componente `UserDetail` usa as props estáticas para renderizar a página de detalhes do usuário para o usuário.
+
+8. **UserDetail Responde com erros**
+   - O componente `UserDetail` recebe mensagem de erro "Falha ao carregar dados dos usuários".
 
 ### Fluxo De Dados para Store
 ![fluxo store pra adicionar usuário visitado](docs/Store/store.png)
@@ -389,7 +403,8 @@ Um diagrama de estrutura de páginas e componentes mostra como as páginas e os 
 
 ## Implementações Futuras
 
-- **Usuários Gostados**: Funcionalidade planejada para permitir que os usuários marquem perfis que gostaram. Implementação futura será realizada para adicionar esta funcionalidade à aplicação.
+- **Usuários Gostados**: Funcionalidade planejada para permitir que os usuários marquem perfis que gostaram. 
+- **Lighthouse**: Poderia ser avaliado melhor os itens que oneram a performance, como as imagens, e pensar numa estratégia de cache pra elas, como o redis ou alguma ferramenta parecida. 
 
 ## Referências
 

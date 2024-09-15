@@ -6,13 +6,19 @@ participant "Next.js Server\n(getStaticProps)" as Server
 participant "GitHub API" as GitHubAPI
 
 User -> Server : Request UserDetail Page
-Server -> GitHubAPI : GET /users/:username
-GitHubAPI -> Server : Return User Data
 
-Server -> GitHubAPI : GET /users/:username/repos
-GitHubAPI -> Server : Return Repos Data
-
-Server -> UserDetail : Return Static Props
-
-UserDetail -> User : Render UserDetail Page
+alt Success
+    Server -> GitHubAPI : GET /users/:username
+    GitHubAPI -> Server : Return User Data
+    
+    Server -> GitHubAPI : GET /users/:username/repos
+    GitHubAPI -> Server : Return Repos Data
+    
+    Server -> UserDetail : Return Static Props
+    UserDetail -> User : Render UserDetail Page
+else Error
+    GitHubAPI -> Server : Error Response
+    Server -> UserDetail : Return Error
+    UserDetail -> User : Display "Erro ao carregar os dados do usuário"
+end
 @enduml
