@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+
+rectangle "Action Creator" as ActionCreator
+rectangle "Dispatcher" as Dispatcher
+rectangle "Store" as Store
+rectangle "View" as View
+rectangle "Action" as Action
+
+ActionCreator -down-> Dispatcher : Creates Action
+Dispatcher -down-> Store : Dispatches Action
+Store -down-> View : Updates State
+View -down-> Action : Triggers Action
+
+Action -right-> Dispatcher : Sends Action
+@enduml

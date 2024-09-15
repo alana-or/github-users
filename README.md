@@ -289,6 +289,48 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
 7. **UserDetail Renderiza a Página**
    - O componente `UserDetail` usa as props estáticas para renderizar a página de detalhes do usuário para o usuário.
 
+### Fluxo De Dados para Store
+![fluxo store pra adicionar usuário visitado](docs/Store/store.png)
+
+#### Fluxo de Ações
+
+O fluxo do Redux para o slice `historySlice` envolve o seguinte processo:
+
+1. **User**: 
+   - O usuário (ou componente) despacha a ação `addVisitedUser` com o payload `"user123"`.
+
+2. **Component**:
+   -  O componente (ou qualquer outro lugar onde a ação é despachada) envia a ação para o `Redux Store`.
+
+3. **Store**:
+   -  O Redux Store recebe a ação e a envia para o `Reducer`.
+
+4. **Reducer**:
+   -  O reducer do `historySlice` processa a ação `addVisitedUser`.
+
+5. **Slice**:
+   -  O slice verifica se `"user123"` já está na lista `visitedUsers`.
+
+6. **Reducer**:
+   -  Se o usuário não estiver na lista, o reducer atualiza o estado.
+
+7. **Store**:
+   -  O estado atualizado é retornado ao Redux Store.
+
+8. **Component**:
+   -  O componente é notificado sobre a mudança de estado e re-renderiza com o estado atualizado.
+
+### Padrão flux
+![padrão flux](docs/Store/Flux.png)
+
+#### Fluxo de Ações
+
+- **Criação de Ação**: O `Action Creator` cria uma ação.
+- **Despacho da Ação**: O `Dispatcher` despacha a ação para o `Store`.
+- **Atualização de Estado**: O `Store` atualiza o estado e notifica a `View`.
+- **Atualização da Interface**: A `View` atualiza a interface e pode acionar novas ações.
+- **Ciclo de Ação**: As ações podem ser enviadas de volta ao `Dispatcher` pela `View`.
+
 ## Estratégias de Carregamento de Dados
 
 ### Página Inicial `/users` com Busca `/search/users`

@@ -1,0 +1,19 @@
+@startuml
+actor User
+
+participant "Home Component\n(Home.tsx)" as Home
+participant "Internal API\n(/api/searchUsers)" as InternalAPI
+participant "GitHub API" as GitHubAPI
+
+User -> Home : Input Search Query
+
+Home -> Home : Debounce Delay (e.g., 300ms)
+
+Home -> InternalAPI : Request Search Query (GET /api/searchUsers?query=:query)
+InternalAPI -> GitHubAPI : GET /search/users?q=:query
+GitHubAPI -> InternalAPI : Return User Data
+
+InternalAPI -> Home : Return User Data
+
+Home -> User : Display Search Results
+@enduml
