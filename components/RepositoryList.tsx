@@ -1,5 +1,5 @@
 import React from 'react';
-import RepositoryItem from './RepositoryItems';
+import RepositoryItem from './RepositoryItem';
 
 interface RepositoryListProps {
   repos: {

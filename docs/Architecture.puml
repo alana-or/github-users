@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+rectangle "Next.js App" {
+    rectangle "Home Page" as Home
+    rectangle "UserDetails Page" as UserDetails 
+    rectangle "Components" as Components
+}
+
+rectangle "External APIs" as ExternalAPIs
+
+rectangle "Next.js Backend" {
+  rectangle "Internal API" as Internal 
+  rectangle "getStaticProps" as getStaticProps
+}
+
+Components <-- Home : Uses
+Components <-- UserDetails : Uses
+
+Home --> getStaticProps : fetch users (static)
+Home --> Internal : search users (dynamic)
+Internal --> ExternalAPIs : Requests users
+getStaticProps --> ExternalAPIs : Requests users
+
+UserDetails --> getStaticProps : fetch user details/repos
+
+@enduml

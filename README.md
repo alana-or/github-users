@@ -331,6 +331,38 @@ O fluxo do Redux para o slice `historySlice` envolve o seguinte processo:
 - **Atualização da Interface**: A `View` atualiza a interface e pode acionar novas ações.
 - **Ciclo de Ação**: As ações podem ser enviadas de volta ao `Dispatcher` pela `View`.
 
+## Diagrama de Estrutura de Páginas e Componentes
+
+Um diagrama de estrutura de páginas e componentes mostra como as páginas e os componentes estão organizados e como se relacionam entre si.
+
+![diagrama de páginas e componentes](docs/PagesComponents.png)
+
+## Arquitetura de Páginas e APIs do Next.js
+
+![Diagrma de arquitetura](docs/Architecture.png)
+
+#### Fluxo de Ações
+
+1. **Home Page**:
+   - **Utiliza**: Componentes da `Components`.
+   - **Solicitações**:
+      - Faz uma solicitação para `getStaticProps` para obter dados de usuários de forma estática durante a construção.
+      - Faz uma solicitação para `Internal API` para buscar usuários dinamicamente.
+
+2. **UserDetails Page**
+   - **Utiliza**: Componentes da `Components`.
+   - **Solicitações**:
+      - Solicita ao `getStaticProps` para obter detalhes dos usuários e repositórios de forma estática.
+
+3. **Next.js Backend**
+   - **Internal API**:
+      - Faz solicitações para `External APIs` para obter dados dos usuários.
+   - **getStaticProps**:
+      - Faz solicitações para `External APIs` para obter dados dos usuários durante a construção.
+
+4. **External APIs**
+   - **Função**: Fornece os dados necessários para `Internal API` e `getStaticProps`.
+
 ## Estratégias de Carregamento de Dados
 
 ### Página Inicial `/users` com Busca `/search/users`

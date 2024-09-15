@@ -1,0 +1,44 @@
+@startuml
+left to right direction
+
+rectangle "_app" {
+  rectangle "MyApp" as MyApp
+}
+
+rectangle "Pages" {
+  rectangle "HomePage" as HomePage
+  rectangle "UserDetailsPage" as UserDetailsPage
+}
+
+rectangle "Components" {
+  rectangle "Provider" as Provider
+  rectangle "Page Component" as PageComponent
+  rectangle "ErrorMessage" as ErrorMessage
+  rectangle "Heading" as Heading
+  rectangle "Loader" as Loader
+  rectangle "RepositoryItem" as RepositoryItem
+  rectangle "RepositoryList" as RepositoryList
+  rectangle "SearchInput" as SearchInput
+  rectangle "UserAvatar" as UserAvatar
+  rectangle "UserDetails" as UserDetails
+  rectangle "UserList" as UserList
+  rectangle "UserListItem" as UserListItem
+}
+
+UserDetailsPage --> ErrorMessage
+UserDetailsPage --> RepositoryList
+UserDetailsPage --> UserDetails
+UserDetailsPage --> UserAvatar
+
+HomePage --> ErrorMessage
+HomePage --> Loader
+HomePage --> SearchInput
+HomePage --> UserList
+
+RepositoryList --> RepositoryItem
+UserList --> UserListItem
+
+MyApp --> Provider
+MyApp --> Heading
+MyApp --> PageComponent
+@enduml
