@@ -13,17 +13,22 @@ Home -> InternalAPI : Request Search Query (GET /api/searchUsers?query=:query)
 InternalAPI -> GitHubAPI : GET /search/users?q=:query
 
 alt Success with Data
-    GitHubAPI -> InternalAPI : Return User Data
-    InternalAPI -> Home : Return User Data
+    GitHubAPI -> InternalAPI : Return User List
     
-    alt No Data
-        Home -> User : Display "Nenhum usuário encontrado."
-    else Data Available
+    alt Users Found
+        InternalAPI -> GitHubAPI : GET /users/:user.login (for each user)
+        GitHubAPI -> InternalAPI : Return User Details (for each user)
+        InternalAPI -> Home : Return User Data
+        
         Home -> User : Display Search Results
+    else No Users Found
+        InternalAPI -> Home : Return No Data
+        Home -> User : Display "Nenhum usuário encontrado."
     end
 else API Error
     GitHubAPI -> InternalAPI : Error Response
     InternalAPI -> Home : Return Error
     Home -> User : Display "Falha ao pesquisar usuários."
 end
+
 @enduml
