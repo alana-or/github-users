@@ -4,7 +4,12 @@ import { debounce } from "lodash";
 
 const error = 'Falha ao pesquisar usuários. Por favor, tente novamente mais tarde.';
 
-const handleResponse = (response: any): User[] => {
+interface ApiResponse<T> {
+    status: number;
+    data: T;
+}
+
+const handleResponse = (response: ApiResponse<User[]>): User[] => {
     if (response.status >= 200 && response.status < 300) {
       return response.data;
     }
@@ -34,7 +39,7 @@ const debouncedSearch = debounce(async (query: string, setLoading: (loading: boo
                 setError('Nenhum usuário encontrado.');
             }
         })
-        .catch(_ => {
+        .catch(() => {
             setFilteredUsers([]);
             setError(error);
         })

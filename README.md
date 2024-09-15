@@ -2,11 +2,11 @@
 
 Este projeto é uma aplicação Next.js que exibe uma lista de usuários e detalhes sobre eles. A seguir, estão detalhadas as estratégias de carregamento de dados e funcionalidades adicionais implementadas.
 
-# Guia para Gerar um Token de Acesso Pessoal do GitHub
+## Guia para Gerar um Token de Acesso Pessoal do GitHub
 
-Este guia explica como criar um token de acesso pessoal do GitHub neste aplicativo.
+Este guia explica como criar um token de acesso pessoal do GitHub para este aplicativo.
 
-## Passos para Gerar um Token do GitHub
+### Passos para Gerar um Token do GitHub
 
 1. **Acesse sua Conta GitHub**
    - Vá para [GitHub](https://github.com) e faça login na sua conta.
@@ -24,7 +24,7 @@ Este guia explica como criar um token de acesso pessoal do GitHub neste aplicati
 5. **Configure o Token**
    - **Note**: Dê um nome ao seu token, como **"Github-users Token"** para ajudar a identificar seu uso.
    - Defina a **data de expiração** do token conforme sua necessidade (opcional).
-   - **Scopes**: Selecione as permissões **"repo"** e **"user"**. 
+   - **Scopes**: Selecione as permissões **"repo"** e **"user"**.
    - Clique em **"Generate token"** (Gerar token).
 
 6. **Copie o Token**
@@ -32,9 +32,9 @@ Este guia explica como criar um token de acesso pessoal do GitHub neste aplicati
    - **Nota:** Armazene o token em um local seguro. Não compartilhe seu token publicamente.
 
 7. **Configure o Token no Seu Aplicativo**
-   - Atualize a variável TOKEN no arquivo .env
+   - Atualize a variável `TOKEN` no arquivo `.env`.
 
-## Dicas de Segurança
+### Dicas de Segurança
 
 - **Não compartilhe seu token**: O token de acesso é como uma senha e deve ser tratado com o mesmo nível de segurança.
 - **Revogue tokens não usados**: Se você gerar um novo token ou não precisar mais de um token antigo, lembre-se de revogá-lo nas configurações do GitHub.
@@ -49,13 +49,13 @@ Este guia explica como criar um token de acesso pessoal do GitHub neste aplicati
 
 ### Jest
 
-- **Descrição**: Jest é um framework de testes para JavaScript. Jest suporta testes unitários, de integração e de snapshots. Ele fornece uma API rica para criar e executar testes, além de recursos como cobertura de código e execução paralela de testes para melhorar o desempenho.
-- **Objetivo**: Facilitar a escrita e execução de testes em código JavaScript/TypeScript. 
+- **Descrição**: Jest é um framework de testes para JavaScript. Suporta testes unitários, de integração e de snapshots. Fornece uma API rica para criar e executar testes, além de recursos como cobertura de código e execução paralela de testes para melhorar o desempenho.
+- **Objetivo**: Facilitar a escrita e execução de testes em código JavaScript/TypeScript.
 
 ### Playwright
 
 - **Descrição**: Playwright é uma ferramenta para automação de navegador desenvolvida pela Microsoft. É usada para testes end-to-end (E2E) e suporta múltiplos navegadores, incluindo Chromium, Firefox e WebKit.
-- **Objetivo**: O Playwright é ideal para testes que envolvem a interação com a interface do usuário e a validação do comportamento da aplicação de ponta a ponta.
+- **Objetivo**: Ideal para testes que envolvem a interação com a interface do usuário e a validação do comportamento da aplicação de ponta a ponta.
 
 ### Tailwind CSS
 
@@ -65,15 +65,15 @@ Este guia explica como criar um token de acesso pessoal do GitHub neste aplicati
 ### Redux
 
 - **Descrição**: Biblioteca para gerenciamento de estado previsível em aplicações JavaScript.
-- **Objetivo**: Utilizado para controlar o estado global da aplicação, como o registro de usuários visitados e gostados. Facilita a gestão de estados complexos e a sincronização entre componentes.
+- **Objetivo**: Controlar o estado global da aplicação, como o registro de usuários visitados e gostados. Facilita a gestão de estados complexos e a sincronização entre componentes.
 
-## Visualizando o Estado do Redux com Redux DevTools
+#### Visualizando o Estado do Redux com Redux DevTools
 
 Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar o [Redux DevTools](https://github.com/reduxjs/redux-devtools). Siga os passos abaixo para instalar a extensão do navegador apropriada.
 
-### 1. Instalar o Redux DevTools
+##### 1. Instalar o Redux DevTools
 
-#### **Para Google Chrome**
+###### **Para Google Chrome**
 
 1. Abra o [Google Chrome](https://www.google.com/chrome/).
 2. Acesse a [Chrome Web Store](https://chromewebstore.google.com/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=pt-pt).
@@ -81,26 +81,14 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
 4. Clique em **"Adicionar ao Chrome"**.
 5. Confirme a instalação clicando em **"Adicionar extensão"**.
 
-## Lighthouse
+### Lighthouse
 
-### Descrição
+- **Descrição**: Lighthouse é uma biblioteca e ferramenta de código aberto para auditar a qualidade de páginas web. Desenvolvida pelo Google, permite avaliar o desempenho, acessibilidade, práticas recomendadas e SEO de uma página, ajudando a identificar áreas de melhoria e garantindo uma melhor experiência para os usuários.
+- **Objetivo**: Fornecer uma análise detalhada da página web, destacando pontos fortes e fracos em aspectos cruciais como desempenho, acessibilidade, práticas recomendadas e SEO.
 
-**Lighthouse** é uma biblioteca e ferramenta de código aberto para auditar a qualidade de páginas web. Desenvolvida pelo Google, ela permite avaliar o desempenho, acessibilidade, práticas recomendadas e SEO de uma página, ajudando a identificar áreas de melhoria e garantindo uma melhor experiência para os usuários.
+#### Como Usar
 
-### Objetivo
-
-O objetivo do Lighthouse é fornecer uma análise detalhada da página web, destacando pontos fortes e fracos em aspectos cruciais como:
-
-- **Desempenho**: Medidas de quão rapidamente a página carrega e se torna interativa.
-- **Acessibilidade**: Avaliação de como a página atende às necessidades de usuários com deficiências.
-- **Práticas Recomendadas**: Verificação de práticas recomendadas para segurança e estabilidade.
-- **SEO**: Análise de como a página está otimizada para motores de busca.
-
-Lighthouse ajuda a garantir que sua página web não apenas funcione bem, mas também ofereça uma experiência de usuário de alta qualidade.
-
-### Como Usar
-
-#### No Google Chrome DevTools
+##### No Google Chrome DevTools
 
 1. Abra o Google Chrome.
 2. Navegue até a página que deseja auditar.
@@ -109,130 +97,210 @@ Lighthouse ajuda a garantir que sua página web não apenas funcione bem, mas ta
 5. Escolha as opções desejadas para a auditoria (por exemplo, Performance, Accessibility, SEO, etc.).
 6. Clique em **"Generate report"**.
 
-#### Linha de Comando
+##### Linha de Comando
 
 1. Instale o Lighthouse globalmente usando npm:
 
-```bash
-npm install -g lighthouse
-```
+    ```bash
+    npm install -g lighthouse
+    ```
 
-2. Execute o Lighthouse para Desktop
+2. Com a app rodando em produção, execute o Lighthouse para Desktop:
 
-```bash
-lighthouse http://localhost:3000/ --output html --output-path ./report-desktop.html --config-path ./lighthouse-config-desktop.json
-```
+    ```bash
+    lighthouse http://localhost:3000/ --output html --output-path ./report-desktop.html --config-path ./lighthouse-config-desktop.json
+    ```
 
-3. Execute o Lighthouse para Mobile
+3. Execute o Lighthouse para Mobile:
 
-```bash
-lighthouse http://localhost:3000/ --output html --output-path ./report-mobile.html --config-path ./lighthouse-config-mobile.json
-```
+    ```bash
+    lighthouse http://localhost:3000/ --output html --output-path ./report-mobile.html --config-path ./lighthouse-config-mobile.json
+    ```
 
-OBS: não passei muito tempo nessa parte, então daria sim pra otimizar melhor a app.
+**OBS**: Não passei muito tempo nessa parte, então daria para otimizar melhor a app.
 
 ## Como Rodar o Projeto
 
-Instale as dependências do projeto:
+1. **Instalar Dependências**
 
-1. ** Install **
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 
-Inicie o servidor de desenvolvimento. Isso irá rodar a aplicação em modo de desenvolvimento e você poderá acessá-la em http://localhost:3000:
+2. **Rodar o Servidor de Desenvolvimento**
 
-2. ** Rodar o Servidor de Desenvolvimento **
-```bash
-npm run dev
+    ```bash
+    npm run dev
+    ```
 
-```
+    Isso irá rodar a aplicação em modo de desenvolvimento e você poderá acessá-la em [http://localhost:3000](http://localhost:3000).
 
-Para criar uma versão de produção do projeto, execute o comando de build:
+3. **Construir o Projeto**
 
-3. ** Construir o Projeto **
-```bash
-npm run build
+    ```bash
+    npm run build
+    ```
 
-```
+4. **Iniciar o Servidor de Produção**
 
-Após o build, inicie o servidor de produção:
+    ```bash
+    npm run start
+    ```
 
-4. ** Iniciar o Servidor de Produção **
-```bash
-npm run start
+5. **Executar Lint**
 
-```
+    ```bash
+    npm run lint
+    ```
 
-Para verificar o código com ESLint, execute:
+## Como Rodar os Testes
 
-5. ** Executar Lint **
-```bash
-npm run lint
+1. **Testes E2E**
 
-```
+    A instalação do Playwright inclui a configuração de ferramentas essenciais e a instalação dos navegadores necessários para os testes.
 
-## Como Rodar os testes
+    ```bash
+    npx playwright install
+    ```
 
-1. ** Testes e2e **
+    Execute os testes E2E:
 
-A instalação do Playwright inclui a configuração de ferramentas essenciais e a instalação dos navegadores necessários para os testes.
+    ```bash
+    npm run test:e2e
+    ```
 
-```bash
-npx playwright install
+2. **Testes de Integração e Unitários**
 
-```
-```bash
-npm run test:e2e
+    ```bash
+    npm run test
+    ```
 
-```
+## Telas e Documentação
 
-2. ** Testes de integração e unitários **
+### Página Inicial
 
-```bash
-npm run test
+- Buscando usuário na API.
 
-```
+    ![Página inicial](docs/Telas/pagina-inicial.png)
 
-## Telas e documentação
-### Página inicial
-Buscando usuário na api.
+- Lista de usuários marcando usuários que já foram visitados.
 
-![Página incial](docs/pagina-inicial.png)
+    ![Lista de usuários](docs/Telas/visitados.png)
 
-Lista de usuários marcando usuário que já foram visitados.
+- Erro ao buscar os usuários na API quando faz a busca pelo campo.
 
-![lista de usuários](docs/visitados.png)
+    ![Mensagem de erro](docs/Telas/error-search.png)
 
-Erro ao buscar os usuários na api quando faz a busca pelo campo.
+- Erro ao buscar os usuários na API.
 
-![mensagem de erro](docs/error-search.png)
+    ![Mensagem de erro](docs/Telas/error.png)
 
-Erro ao buscar os usuários na api.
+### Detalhes do Usuário
 
-![mensagem de erro](docs/error.png)
+- Buscando informações básicas do usuário e seus repositórios.
 
-### Detalhes do usuário
-Buscando informações básicas do usuário e seus repositórios.
+    ![Página de detalhes](docs/Telas/detalhes.png)
 
-![Página de detalhes](docs/detalhes.png)
+- Erro ao buscar detalhes do usuário na API.
 
-Erro ao buscar detalhes do usuário na api.
+    ![Mensagem de erro](docs/Telas/erro-detalhes.png)
 
-![mensagem de erro](docs/erro-detalhes.png)
+## Diagramas de Sequência
+
+### Fluxo de Solicitação da Página Inicial
+
+![Fluxo da página inicial](docs/Home/Home.png)
+
+#### Fluxo de Ações
+
+1. **Usuário Solicita Página Inicial**
+   - O usuário faz uma solicitação para a página inicial (Home).
+
+2. **Servidor Obtém Lista de Usuários**
+   - O servidor Next.js processa essa solicitação chamando a API do GitHub para obter uma lista de usuários (`GET /users`).
+
+3. **API do GitHub Retorna Lista de Usuários**
+   - A API do GitHub responde com a lista de usuários.
+
+4. **Servidor Obtém Detalhes Adicionais dos Usuários**
+   - Para cada usuário na lista, o servidor faz uma solicitação adicional à API do GitHub para obter detalhes específicos sobre cada usuário (`GET /users/:username`).
+
+5. **API do GitHub Retorna Detalhes dos Usuários**
+   - A API do GitHub responde com os detalhes adicionais de cada usuário, como o nome completo.
+
+6. **Servidor Retorna Props Estáticas**
+   - O servidor prepara os dados agregados (lista de usuários com detalhes adicionais) e os envia como props estáticas para o componente Home.
+
+7. **Home Renderiza a Página Inicial**
+   - O componente Home usa as props estáticas para renderizar a página inicial para o usuário.
+
+### Fluxo de Pesquisa de Usuário
+
+![Fluxo de pesquisa](docs/Home/Search.png)
+
+#### Fluxo de Ações
+
+1. **Usuário (User)**
+   - O usuário digita uma consulta de pesquisa na interface do componente Home.
+
+2. **Componente Home (Home)**
+   - O componente Home aciona a função `debouncedSearch` quando o usuário digita.
+   - A função `debouncedSearch` introduz um atraso (debounce) para evitar chamadas excessivas enquanto o usuário ainda está digitando. Este atraso é representado no diagrama como "Debounce Delay" (por exemplo, 300ms).
+
+3. **API Interna (InternalAPI)**
+   - Após o atraso do debounce, a função `debouncedSearch` faz uma solicitação GET para a API interna com a consulta (`/api/searchUsers?query=:query`).
+
+4. **API Interna (InternalAPI)**
+   - A API interna processa a solicitação e faz uma chamada à API externa (GitHub) para obter os dados dos usuários.
+
+5. **API Externa (GitHubAPI)**
+   - A API do GitHub responde com os dados dos usuários que correspondem à consulta.
+
+6. **API Interna (InternalAPI)**
+   - Recebe os dados da API externa e retorna esses dados para o componente Home.
+
+7. **Componente Home (Home)**
+   - Atualiza a interface com os resultados da pesquisa.
+
+### Fluxo de Dados para a Página de Detalhes do Usuário
+
+![Fluxo detalhes usuário](docs/UserDetails/UserDetails.png)
+
+#### Fluxo de Ações
+
+1. **Usuário Solicita Página de Detalhes do Usuário**
+   - O usuário faz uma solicitação para ver a página de detalhes do usuário.
+
+2. **Servidor Obtém Dados do Usuário**
+   - O servidor Next.js processa essa solicitação chamando a API do GitHub para obter informações sobre o usuário (`GET /users/:username`).
+
+3. **API do GitHub Retorna Dados do Usuário**
+   - A API do GitHub responde com os dados do usuário.
+
+4. **Servidor Obtém Dados dos Repositórios**
+   - O servidor então solicita os repositórios do usuário à API do GitHub (`GET /users/:username/repos`).
+
+5. **API do GitHub Retorna Dados dos Repositórios**
+   - A API do GitHub responde com os dados dos repositórios.
+
+6. **Servidor Retorna Props Estáticas**
+   - O servidor envia os dados obtidos (tanto os dados do usuário quanto dos repositórios) como props estáticas para o componente `UserDetail`.
+
+7. **UserDetail Renderiza a Página**
+   - O componente `UserDetail` usa as props estáticas para renderizar a página de detalhes do usuário para o usuário.
 
 ## Estratégias de Carregamento de Dados
 
 ### Página Inicial `/users` com Busca `/search/users`
 
-- **Descrição**: Exibe uma lista de todos os usuários e permite ao usuário buscar por usuários Github.
+- **Descrição**: Exibe uma lista de todos os usuários e permite ao usuário buscar por usuários do GitHub.
 - **Estratégia de Dados**: 
-  - Utiliza renderização no client para obter dados dinamicamente com base na interação do usuário com a busca.
+  - Utiliza renderização no cliente para obter dados dinamicamente com base na interação do usuário com a busca.
   - Utiliza **`getStaticProps`** para gerar a página estaticamente. Dados não mudam frequentemente, o que justifica o uso de renderização estática.
 
 ### Página de Detalhes do Usuário `/users/username` e Listagem de Repositórios `/users/username/repos`
 
-- **Descrição**: Mostra detalhes específicos de um usuário e seus repositórias.
+- **Descrição**: Mostra detalhes específicos de um usuário e seus repositórios.
 - **Estratégia de Dados**: 
   - Utiliza **`getStaticProps`** para gerar a página estaticamente. Dados não mudam frequentemente, o que justifica o uso de renderização estática.
 
@@ -243,10 +311,13 @@ Erro ao buscar detalhes do usuário na api.
 - **Descrição**: Permite que os usuários saibam quais perfis eles já visitaram anteriormente.
 - **Implementação**: Utiliza Redux para gerenciar o estado da aplicação, incluindo:
   - **Usuários Visitados**: Mantém um registro dos usuários visualizados.
-  - **Usuários Gostados**: Funcionalidade planejada para implementação futura, permitindo que os usuários marquem perfis que gostaram. (implementar futuramente)
+  - **Usuários Gostados**: Funcionalidade planejada para implementação futura, permitindo que os usuários marquem perfis que gostaram. 
+
+## Implementações Futuras
+
+- **Usuários Gostados**: Funcionalidade planejada para permitir que os usuários marquem perfis que gostaram. Implementação futura será realizada para adicionar esta funcionalidade à aplicação.
 
 ## Referências
 
 - [OhMyCrawl: `getStaticProps` vs `getServerSideProps`](https://www.ohmycrawl.com/nextjs/getstaticprops-vs-getserversideprops/)
 - [Dev.to: Next.js Data Fetching - `getStaticProps` vs `getServerSideProps`](https://dev.to/mikevarenek/nextjs-data-fetching-getstaticprops-vs-getserversideprops-39ia)
-

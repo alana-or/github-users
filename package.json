@@ -16,6 +16,8 @@
     "@reduxjs/toolkit": "^2.2.7",
     "lodash": "^4.17.21",
     "next": "latest",
+    "plantuml": "^0.0.2",
+    "plantuml-pipe": "^1.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.3.0",
