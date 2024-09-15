@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'; 
-import RepositoryItem from '@/components/RepositoryItems';
+import RepositoryItem from '@/components/RepositoryItem';
 
 describe('RepositoryItem Component', () => {
   test('renders repository name and link correctly', () => {

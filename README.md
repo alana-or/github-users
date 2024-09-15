@@ -111,7 +111,7 @@ Para depurar e inspecionar o estado do Redux em sua aplicação, você pode usar
     lighthouse http://localhost:3000/ --output html --output-path ./report-desktop.html --config-path ./lighthouse-config-desktop.json
     ```
 
-3. Execute o Lighthouse para Mobile:
+3. Com a app rodando em produção, execute o Lighthouse para Mobile:
 
     ```bash
     lighthouse http://localhost:3000/ --output html --output-path ./report-mobile.html --config-path ./lighthouse-config-mobile.json
@@ -164,7 +164,6 @@ Baixe o projeto no seu computador, acesse a pasta onde se encontra o package.jso
     ```bash
     npx playwright install
     ```
-   Para executar os testes e2e, tenha certeza de que a aplicação de dev não esteja sendo executada. A melhor performance acontece com a versão de produção.
     Execute os testes E2E:
 
     ```bash
@@ -404,7 +403,7 @@ Um diagrama de estrutura de páginas e componentes mostra como as páginas e os 
 ## Implementações Futuras
 
 - **Usuários Gostados**: Funcionalidade planejada para permitir que os usuários marquem perfis que gostaram. 
-- **Lighthouse**: Poderia ser avaliado melhor os itens que oneram a performance, como as imagens, e pensar numa estratégia de cache pra elas, como o redis ou alguma ferramenta parecida. 
+- **Lighthouse**: Poderia ser avaliado melhor os itens que oneram a performance, como as imagens, e pensar numa estratégia de cache pra elas, como CDN ou alguma ferramenta parecida. 
 - **PlantUML**: Implementar por código a ferramenta PlantUML para gere arquivos de imagem dados o arquivo .puml para cada diagrama do projeto.
 - **Diagramas**: Existem outros tipos de diagramas mais voltados para página front-end que poderiam ser avaliados para o futuro.
 - **Deploy Github pages**: Implementar CI/CD.

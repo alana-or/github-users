@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'; 
 import RepositoryList from '@/components/RepositoryList';
 
-jest.mock('../../components/RepositoryItems', () => {
+jest.mock('../../components/RepositoryItem', () => {
   return ({ repo }: any) => (
     <li key={repo.id}>
       <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
