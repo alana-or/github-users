@@ -405,8 +405,10 @@ Um diagrama de estrutura de páginas e componentes mostra como as páginas e os 
 
 - **Usuários Gostados**: Funcionalidade planejada para permitir que os usuários marquem perfis que gostaram. 
 - **Lighthouse**: Poderia ser avaliado melhor os itens que oneram a performance, como as imagens, e pensar numa estratégia de cache pra elas, como o redis ou alguma ferramenta parecida. 
+- **Diagramas**: Implementar por código a ferramenta PlantUML para gere arquivos de imagem dados o arquivo .puml para cada diagrama do projeto.
 
 ## Referências
 
+- [PlantUML: É uma ferramenta que permite criar diagramas e gráficos a partir de texto simples e legível, ideal para documentação técnica e visualização de processos.](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
 - [OhMyCrawl: `getStaticProps` vs `getServerSideProps`](https://www.ohmycrawl.com/nextjs/getstaticprops-vs-getserversideprops/)
 - [Dev.to: Next.js Data Fetching - `getStaticProps` vs `getServerSideProps`](https://dev.to/mikevarenek/nextjs-data-fetching-getstaticprops-vs-getserversideprops-39ia)
