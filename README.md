@@ -32,7 +32,7 @@ Este guia explica como criar um token de acesso pessoal do GitHub para este apli
    - **Nota:** Armazene o token em um local seguro. Não compartilhe seu token publicamente.
 
 7. **Configure o Token no Seu Aplicativo**
-   - Atualize a variável `TOKEN` no arquivo `.env`.
+   - Atualize a variável `TOKEN` no arquivo `.env.local`.
 
 ### Dicas de Segurança
 
